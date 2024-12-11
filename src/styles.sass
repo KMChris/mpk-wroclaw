@@ -1,0 +1,85 @@
+@use '@material/web/color/_color.scss'
+
+:root
+  --md-sys-color-primary: olive !important
+  --md-sys-color-secondary: olive !important
+  --md-sys-color-on-primary: #e8eaed !important
+  --md-sys-color-secondary-container: olive !important
+  --md-sys-color-on-secondary-container: #e8eaed !important
+  @media (prefers-color-scheme: dark)
+    @include color.dark-theme
+
+body
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 100dvh
+  margin: 0
+  font-family: Roboto, sans-serif
+
+h1
+  display: inline-flex
+  align-items: center
+  margin-bottom: 0
+
+md-icon
+  font-size: 36px
+  overflow: visible
+  margin-right: 10px
+
+.container
+  width: 300px
+  padding: 0 20px
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)
+  border-radius: 8px
+  display: flex
+  flex-direction: column
+
+.list-item
+  padding: 10px 0
+
+.list-item span
+  flex: 1
+
+#findButton
+  margin-top: 10px
+  height: 40px
+
+md-circular-progress
+  --md-circular-progress-size: 32px
+
+#result
+  display: inline-block
+  margin-bottom: 20px
+
+.vehicle-row
+  display: flex
+  justify-content: space-between
+  margin: 16px auto 0 auto
+  align-items: flex-end
+
+.label
+  font-weight: bold
+  width: 150px
+
+.highlight
+  font-size: 1.2em
+  font-weight: bold
+  color: var(--md-sys-color-primary)
+
+#dialog
+  display: none
+
+@media (max-width: 600px)
+  .container 
+    height: 100%
+    width: 100%
+    border-radius: 0
+
+@media (prefers-color-scheme: dark)
+  body 
+    background-color: #121212
+    color: #e8eaed
+  
+  .container 
+    background-color: #1e1e1e

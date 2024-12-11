@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Znajdź numer boczny - MPK Wrocław</title>
+  <script type="module" src="./bundle.js"></script>
+  <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=directions_bus">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=directions_bus" />
+  </noscript>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1><md-icon>directions_bus</md-icon>MPK Wrocław</h1>
+    <h3>Znajdź numer boczny pojazdu</h3>
+    <md-outlined-text-field label="Numer linii" id="line"></md-outlined-text-field>
+    <md-filled-button id="findButton">Znajdź najbliższy pojazd</md-filled-button>
+    <div id="result"></div>
+  </div>
+  <md-dialog id="dialog">
+    <div slot="headline">
+      Brak lokalizacji
+    </div>
+    <form slot="content" id="dialogForm" method="dialog">
+      Nie udało się pobrać lokalizacji użytkownika.
+      Lokalizacja jest wymagana do działania aplikacji.
+    </form>
+    <div slot="actions">
+      <md-text-button form="dialogForm">Ok</md-text-button>
+    </div>
+  </md-dialog>
+</body>
+</html>
