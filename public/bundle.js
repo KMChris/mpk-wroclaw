@@ -4686,10 +4686,10 @@ const findNearestVehicle = (userLocation) => {
 const button = document.getElementById('findButton');
 button.addEventListener('click', async () => {
   if (navigator.geolocation) {
+    button.disabled = true;
+    button.innerHTML = `<md-circular-progress indeterminate></md-circular-progress>`;
     navigator.geolocation.getCurrentPosition(async (position) => {
       try {
-        button.disabled = true;
-        button.innerHTML = `<md-circular-progress indeterminate></md-circular-progress>`;
         await fetchData(document.getElementById('line').value);
         displayResult(findNearestVehicle({
           latitude: position.coords.latitude,
@@ -4708,6 +4708,8 @@ button.addEventListener('click', async () => {
       const dialog = document.getElementById('dialog');
       dialog.style.display = 'contents';
       dialog.show();
+      button.innerHTML = 'Znajdź najbliższy pojazd';
+      button.disabled = false;
     }, {enableHighAccuracy: true});
   } else {
     alert('Geolokalizacja nie jest wspierana przez tę przeglądarkę.');
