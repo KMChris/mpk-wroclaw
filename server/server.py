@@ -14,7 +14,7 @@ def proxy():
         'Content-Type': 'application/json'
     }
     response = requests.get(url, params=params, headers=headers)
-    return jsonify(response.json()['result']['records'])
+    return jsonify(response.json()['result']['records']), response.status_code, {'Access-Control-Allow-Origin': '*'}
 
 if __name__ == '__main__':
     app.run(port=5000, host='0.0.0.0')

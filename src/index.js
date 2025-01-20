@@ -6,10 +6,23 @@ import '@material/web/dialog/dialog.js';
 import '@material/web/icon/icon.js';
 
 let vehicles = [];
+const map = L.map('map').setView([51.505, -0.09], 13);
+L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+  maxZoom: 18
+}).addTo(map);
+
+const showMarkers = async (vehicles) => {
+  const markers = vehicles.map(vehicle => L.marker([
+    vehicle.Ostatnia_Pozycja_Szerokosc,
+    vehicle.Ostatnia_Pozycja_Dlugosc
+  ]).addTo(map));
+  const group = new L.featureGroup(markers);
+  map.fitBounds(group.getBounds());
+};
 
 const fetchData = async (filter) => {
   filter = filter ? `?filters={"Nazwa_Linii":"${filter}"}` : '';
-  const url = 'api' + filter;
+  const url = 'http://127.0.0.1:5000/mpk/api' + filter;
   const res = await fetch(url);
   vehicles = await res.json();
 };
@@ -25,6 +38,9 @@ const findNearestVehicle = (userLocation) => {
         Math.sin(dLon / 2) * Math.sin(dLon / 2);
     return 12742 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   };
+
+  showMarkers(vehicles);
+  L.marker([userLocation.latitude, userLocation.longitude]).addTo(map);
 
   return vehicles.map(vehicle => ({
       ...vehicle,
