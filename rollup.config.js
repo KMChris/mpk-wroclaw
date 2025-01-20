@@ -1,4 +1,5 @@
 import resolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
 
 export default {
   input: 'src/index.js',
@@ -6,5 +7,11 @@ export default {
     file: 'public/bundle.js',
     format: 'esm'
   },
-  plugins: [resolve()]
+  plugins: [
+    resolve(),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      preventAssignment: true
+    })
+  ]
 };

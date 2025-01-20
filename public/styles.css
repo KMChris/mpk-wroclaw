@@ -1,5 +1,5 @@
 :root {
-  --md-sys-color-primary: olive !important;
+  --md-sys-color-primary: rgb(148, 148, 0) !important;
   --md-sys-color-secondary: olive !important;
   --md-sys-color-on-primary: #e8eaed !important;
   --md-sys-color-secondary-container: olive !important;
@@ -56,13 +56,13 @@
     --md-sys-color-tertiary-container: #633b48;
     --md-sys-color-tertiary-fixed: #ffd8e4;
     --md-sys-color-tertiary-fixed-dim: #efb8c8;
+    --md-sys-color-primary: olive !important;
   }
 }
 
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
   height: 100dvh;
   margin: 0;
   font-family: Roboto, sans-serif;
@@ -74,7 +74,7 @@ h1 {
   margin-bottom: 0;
 }
 
-md-icon {
+md-icon#busIcon {
   font-size: 36px;
   overflow: visible;
   margin-right: 10px;
@@ -83,14 +83,109 @@ md-icon {
 .container {
   width: 300px;
   padding: 0 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  border-radius: 8px;
   display: flex;
   flex-direction: column;
+  z-index: 2;
+}
+.container.visible {
+  animation: slideIn 0.5s forwards;
+}
+.container.hidden {
+  animation: slideOut 0.5s forwards;
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+#showMap {
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 3;
 }
 
 #map {
-  height: 180px;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.map-icon {
+  width: 40px;
+  height: 20px;
+  line-height: 20px;
+  background-color: rgba(128, 64, 0, 0.8);
+  color: var(--md-sys-color-on-primary);
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+.map-icon.tram {
+  background-color: rgba(0, 64, 128, 0.8);
+}
+
+.location-marker {
+  width: 12px;
+  height: 12px;
+  background-color: rgb(175, 175, 0);
+  border: 2px solid var(--md-sys-color-on-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(175, 175, 0, 0.75);
+  position: relative;
+}
+
+.pulsating-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  margin-left: -12px;
+  border-radius: 50%;
+  background-color: rgba(175, 175, 0, 0.5);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+.leaflet-bar a {
+  border: none;
+}
+
+.leaflet-tooltip {
+  font-size: 1.2em;
+  border: none;
 }
 
 .list-item {
@@ -130,7 +225,7 @@ md-circular-progress {
 .highlight {
   font-size: 1.2em;
   font-weight: bold;
-  color: var(--md-sys-color-primary);
+  color: rgb(167, 167, 46);
 }
 
 #dialog {
@@ -139,18 +234,59 @@ md-circular-progress {
 
 @media (max-width: 600px) {
   .container {
+    position: absolute;
     height: 100%;
-    width: 100%;
+    width: calc(100% - 40px);
     border-radius: 0;
+  }
+  #showMap {
+    display: block;
   }
 }
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #121212;
-    color: #e8eaed;
+    color: var(--md-sys-color-on-primary);
   }
   .container {
     background-color: #1e1e1e;
+  }
+  .map-icon {
+    background-color: rgba(202, 112, 22, 0.8);
+  }
+  .map-icon.tram {
+    background-color: rgba(30, 113, 196, 0.8);
+  }
+  .location-marker {
+    border: 2px solid rgb(50, 50, 50);
+  }
+  .leaflet-bar a {
+    border: none;
+    background-color: rgb(30, 30, 30);
+    color: var(--md-sys-color-on-primary);
+  }
+  .leaflet-bar a:hover, .leaflet-bar a:focus {
+    background-color: rgb(18, 18, 18);
+  }
+  .leaflet-bar a.leaflet-disabled {
+    background-color: rgb(50, 50, 50);
+  }
+  .leaflet-tooltip {
+    background-color: rgb(30, 30, 30);
+    color: var(--md-sys-color-on-primary);
+  }
+  .leaflet-tooltip.leaflet-tooltip-top:before {
+    border-top-color: rgb(30, 30, 30);
+  }
+  .leaflet-container {
+    background-color: rgb(18, 18, 18);
+  }
+  .leaflet-container a {
+    color: var(--md-sys-color-on-primary);
+  }
+  .leaflet-container .leaflet-control-attribution {
+    color: var(--md-sys-color-on-primary);
+    background-color: rgb(30, 30, 30);
   }
 }
 
